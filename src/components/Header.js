@@ -19,7 +19,7 @@ export const Header = () => {
   }, [dark]);
 
   const activeClass = "block text-2xl py-2 px-3 bg-teal-700 rounded md:bg-transparent md:text-teal-600 md:p-0 md:dark:text-teal-600";
-  const inactiveClass = "block text-2xl py-2 px-3 text-white rounded hover:bg-teal-600 md:hover:bg-transparent md:hover:text-teal-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700";
+  const inactiveClass = "block text-2xl py-2 px-3 text-black rounded hover:bg-teal-600 md:hover:bg-transparent md:hover:text-teal-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700";
 
   const handleSubmit=(event)=>{
     event.preventDefault();
