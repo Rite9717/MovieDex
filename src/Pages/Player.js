@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HlsPlayer from "../components/HlsPlayer";
 
 // Example movie list
@@ -15,44 +15,51 @@ const movies = [
 
 export const Player = () => {
   const [selectedMovie, setSelectedMovie] = useState(movies[0].url);
+  const [isPageLoaded, setIsPageLoaded] = useState(false);
+
+  // Trigger fade-in animation on page load
+  useEffect(() => {
+    setIsPageLoaded(true);
+  }, []);
 
   const handleChange = (event) => {
     setSelectedMovie(encodeURI(event.target.value));
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        backgroundColor: "#f0f0f0",
-        padding: "20px",
-      }}
-    >
-      <h2 style={{ marginBottom: "20px" }}>Select a Movie</h2>
+    <div className={`min-h-screen bg-gray-900 text-white py-12 px-4 transition-opacity duration-500 ${
+      isPageLoaded ? 'opacity-100' : 'opacity-0'
+    }`}>
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 font-caveat animate-fadeIn">
+          Watch Now
+        </h1>
 
-      {/* Movie Selection Dropdown */}
-      <select
-        onChange={handleChange}
-        style={{
-          marginBottom: "30px",
-          padding: "10px 15px",
-          fontSize: "16px",
-          borderRadius: "5px",
-        }}
-      >
-        {movies.map((movie, idx) => (
-          <option key={idx} value={movie.url}>
-            {movie.name}
-          </option>
-        ))}
-      </select>
+        <div className="mb-10 flex flex-col items-center animate-slideInUp">
+          {/* Movie Selection Label */}
+          <label htmlFor="movie-selector" className="text-xl font-semibold text-gray-300 mb-3 transition-colors duration-200">
+            Select Your Movie
+          </label>
+          
+          {/* Movie Selection Dropdown with enhanced transitions */}
+          <select
+            id="movie-selector"
+            onChange={handleChange}
+            className="bg-gray-800 text-white text-lg px-5 py-3 rounded-lg border-2 border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none hover:border-gray-600 hover:bg-gray-750 transition-all duration-200 cursor-pointer transform hover:scale-105"
+          >
+            {movies.map((movie, idx) => (
+              <option key={idx} value={movie.url}>
+                {movie.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      {/* HLS Player */}
-      <HlsPlayer src={selectedMovie} />
+        {/* HLS Player with smooth transition on movie change */}
+        <div className="transition-all duration-300 ease-in-out">
+          <HlsPlayer key={selectedMovie} src={selectedMovie} />
+        </div>
+      </div>
     </div>
   );
 };
